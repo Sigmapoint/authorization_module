@@ -97,7 +97,7 @@ You need to:
             return badRequest(makeError("session", "not exists"));
         }
         
-#### Change user password
+#### Change password for actually logged user
 
         try {
         	AuthorizationFacade.changePassword(ctx(), userOldPasswod, userNewPassword);
