@@ -1,4 +1,4 @@
-# Authotization module
+# Authorization module
 
 You need to:
 
