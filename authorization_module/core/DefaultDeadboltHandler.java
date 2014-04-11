@@ -1,6 +1,6 @@
-package authorization_module.core;
+package authorization_module.authorization_module.core;
 
-import authorization_module.AuthorizationFacade;
+import authorization_module.authorization_module.AuthorizationFacade;
 import be.objectify.deadbolt.core.models.Subject;
 import be.objectify.deadbolt.java.DeadboltHandler;
 import be.objectify.deadbolt.java.DynamicResourceHandler;

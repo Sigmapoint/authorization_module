@@ -1,6 +1,6 @@
-package authorization_module;
+package authorization_module.authorization_module;
 
-import authorization_module.customRestrict.CustomRestrictAction;
+import authorization_module.authorization_module.customRestrict.CustomRestrictAction;
 import be.objectify.deadbolt.java.actions.Restrict;
 import play.mvc.With;
 

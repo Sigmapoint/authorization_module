@@ -1,17 +1,17 @@
-package authorization_module;
+package authorization_module.authorization_module;
 
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 
-import models.db.customers.UserManager;
+import authorization_module.authorization_module.UsersManager;
 
 import org.mindrot.jbcrypt.BCrypt;
 
 import play.mvc.Http;
-import authorization_module.core.AuthUser;
-import authorization_module.core.SessionTokenHelper;
-import authorization_module.core.UserSession;
+import authorization_module.authorization_module.core.AuthUser;
+import authorization_module.authorization_module.core.SessionTokenHelper;
+import authorization_module.authorization_module.core.UserSession;
 import be.objectify.deadbolt.core.models.Role;
 
 public class AuthorizationFacade {

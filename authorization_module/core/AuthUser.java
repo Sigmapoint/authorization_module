@@ -1,4 +1,4 @@
-package authorization_module.core;
+package authorization_module.authorization_module.core;
 
 import java.util.UUID;
 
@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 import play.db.ebean.Model;
-import validation.Patterns;
 
 import com.avaje.ebean.validation.NotNull;
 import com.avaje.ebean.validation.Pattern;
@@ -25,7 +24,6 @@ public class AuthUser extends Model {
     @Column(unique = true)
     private String ID;
 
-    @Pattern(regex = Patterns.NOT_EMPTY)
     private String passwordSaltAndHash;
 
     public AuthUser(String ID, String hashed) {

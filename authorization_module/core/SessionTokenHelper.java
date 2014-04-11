@@ -1,4 +1,4 @@
-package authorization_module.core;
+package authorization_module.authorization_module.core;
 
 import play.mvc.Http.Context;
 
