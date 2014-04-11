@@ -16,7 +16,7 @@ import be.objectify.deadbolt.core.models.Role;
 
 public class AuthorizationFacade {
 
-    private static UserManager manager;
+    private static UsersManager manager;
 
     public static String login(UserAuthentication user) throws UserNotExistsException, WrongCredentialsException, PersistenceException {
         AuthUser authUser = AuthUser.find.where().eq("ID", user.getID()).findUnique();
