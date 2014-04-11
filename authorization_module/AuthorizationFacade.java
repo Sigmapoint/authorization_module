@@ -90,7 +90,7 @@ public class AuthorizationFacade {
         return AuthUser.find.where().eq("ID", user.getID()).findList().size() == 0;
     }
 
-    public static void setManager(UserManager manager) {
+    public static void setManager(UsersManager manager) {
 
         AuthorizationFacade.manager = manager;
     }
