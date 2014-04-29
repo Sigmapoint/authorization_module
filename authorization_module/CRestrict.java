@@ -13,9 +13,9 @@ import java.lang.annotation.*;
 @Inherited
 public @interface CRestrict {
 
-    UserRoles[] value();
+	UserRoles[] value();
 
-    Restrict config() default @Restrict({});
+	Restrict config() default @Restrict({});
 }
 
 /* To accept caller is enough to have one of role from list */

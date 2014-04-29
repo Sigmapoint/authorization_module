@@ -6,13 +6,13 @@ import java.util.UUID;
 
 public class SessionTokenHelper {
 
-    public static final String SESSION_TOKEN_HEADER_NAME = "X-Session-Token";
+	public static final String SESSION_TOKEN_HEADER_NAME = "X-Session-Token";
 
-    public static String generateToken() {
-        return UUID.randomUUID().toString();
-    }
+	public static String generateToken() {
+		return UUID.randomUUID().toString();
+	}
 
-    public static String getSessionTokenFromHeader(Context context) {
-        return context.request().getHeader(SESSION_TOKEN_HEADER_NAME);
-    }
+	public static String getSessionTokenFromHeader(Context context) {
+		return context.request().getHeader(SESSION_TOKEN_HEADER_NAME);
+	}
 }

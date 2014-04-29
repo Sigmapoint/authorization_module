@@ -4,10 +4,10 @@ import be.objectify.deadbolt.core.models.Role;
 
 public enum UserRoles implements Role {
 
-    CUSTOMER, ADMIN;
+	CUSTOMER, ADMIN;
 
-    @Override
-    public String getName() {
-        return name();
-    }
+	@Override
+	public String getName() {
+		return name();
+	}
 }
