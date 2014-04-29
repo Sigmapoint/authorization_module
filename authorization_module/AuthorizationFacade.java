@@ -6,6 +6,7 @@ import javax.persistence.PersistenceException;
 
 import authorization_module.authorization_module.UsersManager;
 
+import models.db.customers.User;
 import org.mindrot.jbcrypt.BCrypt;
 
 import play.mvc.Http;
@@ -98,4 +99,17 @@ public class AuthorizationFacade {
     public static List<? extends Role> getRoles(String userID) {
         return manager.getRolesByID(userID);
     }
+
+	public static void resetPassword(User user) throws UserNotExistsException {
+		AuthUser authUser = AuthUser.find.where().eq("ID", user.getID()).findUnique();
+
+		if (authUser == null) {
+			throw new UserNotExistsException();
+		}
+
+		// TODO ewentualne wylogowania
+
+		authUser.setPasswordSaltAndHash(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+		authUser.save();
+	}
 }
