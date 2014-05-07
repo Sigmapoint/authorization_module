@@ -4,6 +4,7 @@ import authorization_module.authorization_module.core.AuthUser;
 import authorization_module.authorization_module.core.SessionTokenHelper;
 import authorization_module.authorization_module.core.UserSession;
 import be.objectify.deadbolt.core.models.Role;
+import models.db.customers.Customer;
 import models.db.customers.User;
 import org.mindrot.jbcrypt.BCrypt;
 import play.mvc.Http;
@@ -107,5 +108,21 @@ public class AuthorizationFacade {
 
 		authUser.setPasswordSaltAndHash(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
 		authUser.save();
+	}
+
+	public static void unregisterFromAuth(UserAuthentication user) throws UserNotExistsException {
+		AuthUser authUser = AuthUser.find.where().eq("ID", user.getID()).findUnique();
+		if (authUser == null) {
+			throw new UserNotExistsException();
+		}
+		logoutAllSessionsOfUser(user);
+		authUser.delete();
+	}
+
+	private static void logoutAllSessionsOfUser(UserAuthentication authUser) {
+		List<UserSession> deletingUserSessions = UserSession.find.where().eq("user", authUser).findList();
+		for (UserSession session : deletingUserSessions) {
+			session.delete();
+		}
 	}
 }

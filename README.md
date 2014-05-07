@@ -96,7 +96,16 @@ You need to:
         } catch (SessionNotExistsException e) {
             return badRequest(makeError("session", "not exists"));
         }
-        
+
+#### Remove user from db, when he delete own account
+
+        try {
+            AuthorizationFacade.unregisterFromAuth(customer);
+        } catch (UserNotExistsException e) {
+            return badRequest(makeError("user", "not exists"));
+        }
+
+
 #### Change password for actually logged user
 
         try {
