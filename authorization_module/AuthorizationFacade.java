@@ -115,11 +115,11 @@ public class AuthorizationFacade {
 		if (authUser == null) {
 			throw new UserNotExistsException();
 		}
-		logoutAllSessionsOfUser(user);
+		logoutAllSessionsOfUser(authUser);
 		authUser.delete();
 	}
 
-	private static void logoutAllSessionsOfUser(UserAuthentication authUser) {
+	private static void logoutAllSessionsOfUser(AuthUser authUser) {
 		List<UserSession> deletingUserSessions = UserSession.find.where().eq("user", authUser).findList();
 		for (UserSession session : deletingUserSessions) {
 			session.delete();
