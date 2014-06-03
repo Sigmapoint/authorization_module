@@ -4,7 +4,6 @@ import authorization_module.authorization_module.core.AuthUser;
 import authorization_module.authorization_module.core.SessionTokenHelper;
 import authorization_module.authorization_module.core.UserSession;
 import be.objectify.deadbolt.core.models.Role;
-import models.db.customers.Customer;
 import models.db.customers.User;
 import org.mindrot.jbcrypt.BCrypt;
 import play.mvc.Http;
@@ -17,7 +16,7 @@ public class AuthorizationFacade {
 	private static UsersManager manager;
 
 	public static String login(UserAuthentication user) throws UserNotExistsException, WrongCredentialsException, PersistenceException {
-		AuthUser authUser = AuthUser.find.where().eq("ID", user.getID()).findUnique();
+		AuthUser authUser = AuthUser.find.where().eq("ID", user.getAuthID()).findUnique();
 
 		if (authUser == null) {
 			throw new UserNotExistsException();
@@ -62,7 +61,7 @@ public class AuthorizationFacade {
 
 	public static void registerForAuth(UserAuthentication user) throws UnableToRegisterException {
 		String passwordSaltAndHash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
-		AuthUser auth = new AuthUser(user.getID(), passwordSaltAndHash);
+		AuthUser auth = new AuthUser(user.getAuthID(), passwordSaltAndHash);
 		try {
 			auth.save();
 		} catch (Exception e) {
@@ -85,7 +84,7 @@ public class AuthorizationFacade {
 	}
 
 	public static boolean canBeRegistered(UserAuthentication user) {
-		return AuthUser.find.where().eq("ID", user.getID()).findList().size() == 0;
+		return AuthUser.find.where().eq("ID", user.getAuthID()).findList().size() == 0;
 	}
 
 	public static void setManager(UsersManager manager) {
@@ -98,7 +97,7 @@ public class AuthorizationFacade {
 	}
 
 	public static void resetPassword(User user) throws UserNotExistsException {
-		AuthUser authUser = AuthUser.find.where().eq("ID", user.getID()).findUnique();
+		AuthUser authUser = AuthUser.find.where().eq("ID", user.getAuthID()).findUnique();
 
 		if (authUser == null) {
 			throw new UserNotExistsException();
@@ -111,7 +110,7 @@ public class AuthorizationFacade {
 	}
 
 	public static void unregisterFromAuth(UserAuthentication user) throws UserNotExistsException {
-		AuthUser authUser = AuthUser.find.where().eq("ID", user.getID()).findUnique();
+		AuthUser authUser = AuthUser.find.where().eq("ID", user.getAuthID()).findUnique();
 		if (authUser == null) {
 			throw new UserNotExistsException();
 		}
