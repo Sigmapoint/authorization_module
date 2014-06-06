@@ -60,7 +60,7 @@ public class AuthorizationFacade {
 	}
 
 	public static void registerForAuth(UserAuthentication user) throws UnableToRegisterException {
-		String passwordSaltAndHash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+		String passwordSaltAndHash = hashPassword(user.getPassword());
 		AuthUser auth = new AuthUser(user.getAuthID(), passwordSaltAndHash);
 		try {
 			auth.save();
@@ -79,8 +79,21 @@ public class AuthorizationFacade {
 		if (user == null || !BCrypt.checkpw(oldPassword, user.getPasswordSaltAndHash())) {
 			throw new WrongCredentialsException();
 		}
-		user.setPasswordSaltAndHash(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
+		user.setPasswordSaltAndHash(hashPassword(newPassword));
 		user.update();
+	}
+
+	private static String hashPassword(String newPassword) {
+		return BCrypt.hashpw(newPassword, BCrypt.gensalt());
+	}
+
+	public static boolean isPasswordCorrect(UserAuthentication user) throws UserNotExistsException {
+		List<AuthUser> authUsers = AuthUser.find.where().eq("ID", user.getAuthID()).findList();
+		if (authUsers.size() < 1) {
+			throw new UserNotExistsException();
+		}
+		AuthUser authUser = authUsers.get(0);
+		return BCrypt.checkpw(user.getPassword(), authUser.getPasswordSaltAndHash());
 	}
 
 	public static boolean canBeRegistered(UserAuthentication user) {
@@ -105,7 +118,7 @@ public class AuthorizationFacade {
 
 		// TODO ewentualne wylogowania aktualnych sesji
 
-		authUser.setPasswordSaltAndHash(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+		authUser.setPasswordSaltAndHash(hashPassword(user.getPassword()));
 		authUser.save();
 	}
 
